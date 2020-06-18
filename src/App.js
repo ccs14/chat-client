@@ -14,9 +14,10 @@ class App extends Component {
     const { endpoint } = this.state;
     const socket = socketIOClient(endpoint);
 
-    for (let i = 0; i < 10; i++) {
-      socket.emit("message", `this is message ${i}, from the client`);
-    }
+    var userId = Math.floor(Math.random() * 1000).toString();
+
+    // send a message event, passing username, and message contents
+    socket.emit("message", [userId, "this is a message from the client"]);
 
     socket.on("group-message", data => this.setState({ response: data }, () => {
       console.log(`this is message '${data}' from the server`)
@@ -24,11 +25,9 @@ class App extends Component {
   }
 
   render() {
-    /*
     if (this.state.response) {
       console.log(`this message came from the sever: ${this.state.response.data}`);
     }
-    */
 
     const { response } = this.state;
     return (
