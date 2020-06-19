@@ -1,11 +1,13 @@
 import React, { Component } from "react";
 import socketIOClient from "socket.io-client";
+import Chat from "./Components/Chat";
 
 class App extends Component {
   constructor() {
     super();
     this.state = {
       response: false,
+      messages: [],
       endpoint: "http://127.0.0.1:3001/"
     };
   }
@@ -21,6 +23,7 @@ class App extends Component {
 
     socket.on("group-message", data => this.setState({ response: data }, () => {
       console.log(`this is message '${data}' from the server`)
+      this.state.messages.push(data);
     }));
   }
 
@@ -31,11 +34,14 @@ class App extends Component {
 
     const { response } = this.state;
     return (
+      /*
       <div style={{ textAlign: "center" }}>
         {response
           ? <p>{response}</p>
           : <p>Loading...</p>}
       </div>
+      */
+     <Chat messages={this.state.messages}/>
     );
   }
 }
