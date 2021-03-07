@@ -32,11 +32,13 @@ class App extends Component {
   }
 
   render() {
+    console.log(`this.state: ${this.state}`);
+
     if (this.state.response) {
       console.log(`this message came from the sever: ${this.state.response.data}`);
     }
 
-    const { response } = this.state;
+    // const { response } = this.state;
     return (
       <Chat messages={this.state.messages}/>
     );

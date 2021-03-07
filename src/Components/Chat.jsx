@@ -6,7 +6,7 @@ const Chat = (props) => {
     console.log("props.messages", props.messages);
 
     let items = [];
-    items = this.props.messages.map((message) =>
+    items = props.messages.map((message) =>
                 <Message message={message} />
             );
 
