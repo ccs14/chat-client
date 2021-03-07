@@ -17,17 +17,18 @@ class App extends Component {
     const { endpoint } = this.state;
     const socket = socketIOClient(endpoint);
 
-    var userId = Math.floor(Math.random() * 1000).toString();
+    let userId = Math.floor(Math.random() * 1000).toString();
 
-    debugger;
-
-    // send a message event, passing username, and message contents
+    // send a message event to the server, pass username and message
     socket.emit("message", [userId, "this is a message from the client"]);
 
+    // receive a group-message event, store data
     socket.on("group-message", data => this.setState({ response: data }, () => {
-      console.log(`this is message '${data}' from the server`)
+      console.log(`this is message '${data}' from the server`);
       this.state.messages.push(data);
     }));
+
+    console.log("client state: ", this.state);
   }
 
   render() {
@@ -37,7 +38,7 @@ class App extends Component {
 
     const { response } = this.state;
     return (
-     <Chat messages={this.state.messages}/>
+      <Chat messages={this.state.messages}/>
     );
   }
 }

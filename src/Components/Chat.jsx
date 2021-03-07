@@ -1,13 +1,22 @@
 import React from "react";
+import Message from "./Message";
 
 const Chat = (props) => {
-    return ({
+    console.log("props", props);
+    console.log("props.messages", props.messages);
+
+    let items = [];
+    items = this.props.messages.map((message) =>
+                <Message message={message} />
+            );
+
+    console.log("items", items);
+
+    return (
         <div>
-            this.props.messages.array.forEach(message => {
-                <Message message={message}/>
-            });
+            {items}
         </div>
-    })
+    )
 }
 
 export default Chat;
