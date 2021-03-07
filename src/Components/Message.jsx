@@ -1,6 +1,8 @@
+import React from "react";
+
 const Message = (data) => {
     return (
-        <p></p>
+        <p>{data.user} - {data.message}</p>
     );
 }
 

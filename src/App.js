@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import socketIOClient from "socket.io-client";
 import Chat from "./Components/Chat";
+import 'dotenv/config';
 
 class App extends Component {
   constructor() {
@@ -18,6 +19,8 @@ class App extends Component {
 
     var userId = Math.floor(Math.random() * 1000).toString();
 
+    debugger;
+
     // send a message event, passing username, and message contents
     socket.emit("message", [userId, "this is a message from the client"]);
 
@@ -34,13 +37,6 @@ class App extends Component {
 
     const { response } = this.state;
     return (
-      /*
-      <div style={{ textAlign: "center" }}>
-        {response
-          ? <p>{response}</p>
-          : <p>Loading...</p>}
-      </div>
-      */
      <Chat messages={this.state.messages}/>
     );
   }
