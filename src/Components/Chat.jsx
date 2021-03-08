@@ -6,8 +6,8 @@ const Chat = (props) => {
     console.log("props.messages", props.messages);
 
     let items = [];
-    items = props.messages.map((message) =>
-                <Message message={message} />
+    items = props.messages.map((msg) =>
+                <Message user={msg.user} contents={msg.message} />
             );
 
     console.log("items", items);
