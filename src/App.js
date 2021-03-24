@@ -3,12 +3,6 @@ import socketIOClient from "socket.io-client";
 import Chat from "./Components/Chat";
 import makeText from "./Utils/Utils";
 import 'dotenv/config';
-
-// socket object for client
-// const socket = socketIOClient(process.env.SERVER_URL);
-// create user id for each client
-const userId = Math.floor(Math.random() * 1000).toString();
-
 class App extends Component {
   constructor(props) {
     super(props);
@@ -21,6 +15,13 @@ class App extends Component {
     };
   }
 
+  // define endpoint
+  endpoint = "http://127.0.0.1:3001";
+  // socket object for client
+  socket = socketIOClient(this.endpoint);
+  // create user id for each client
+  userId = Math.floor(Math.random() * 1000).toString();
+
   // capture textbox input
   captureText = (event) => {
     // capture from textbox and update state var
@@ -30,30 +31,28 @@ class App extends Component {
 
   // make a new message from random text, and send to the server
   createMessage = () => {
-    const socket = socketIOClient(process.env.SERVER_URL);
     console.log("in createMessage()");
     console.log("state: ", this.state);
     // get random text
     // const messageText = makeText(15);
     // create standard message object
     const message = {
-      "user": userId,
+      "user": this.userId,
       "message": this.state.text
     };
     // log and send new message
     console.log("new client message: ", message);
     debugger;
-    socket.emit("message", [message]);
+    this.socket.emit("message", [message]);
   };
 
   componentDidMount = () => {
-    const socket = socketIOClient(process.env.SERVER_URL);
     // receive a group-message event, store data
-    socket.on("group-message", data => this.setState({ response: data }, () => {
-      let newMessage = `user${data.user} - ${data.message}`;
-      console.log("from server: ", newMessage);
-      console.log("from server: ", data);
-      this.state.messages.push(data);
+    this.socket.on("group-message", data => this.setState({ response: data }, () => {
+      debugger;
+      let newMessage = `user${data[0].user} - ${data[0].message}`;
+      console.log("from server: ", data[0]);
+      this.state.messages.push(data[0]);
     }));
 
     console.log("client state: ", this.state);
