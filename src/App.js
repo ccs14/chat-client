@@ -22,22 +22,19 @@ class App extends Component {
   // make a new message from random text, and send to the server
   createMessage = () => {
     // get random text
-    const messageText = makeText(15);
-    // create standard message object
-    const message = {
-      "user": this.userId,
-      "message": messageText
-    };
-
+    let messageText = makeText(15);
+    let newMessage = `user${this.userId} - ${messageText}`;
+    debugger;
     // send a message event to the server, pass username and message
-    this.socket.emit("message", message);
+    this.socket.emit("message", [`user${this.userId}`, messageText]);
+    // add message to history
+    this.state.messages.push(newMessage);
   };
 
   componentDidMount() {
     // receive a group-message event, store data
     this.socket.on("group-message", data => this.setState({ response: data }, () => {
-      let newMessage = `user${data.user} - ${data.message}`;
-      console.log(`${newMessage} (from server)`);
+      console.log(`this is message '${data}' from the server`);
       this.state.messages.push(data);
     }));
 
@@ -51,15 +48,12 @@ class App extends Component {
       console.log(`this message came from the sever: ${this.state.response.data}`);
     }
 
-    if (this.state.messages)
-    {
-      return (
-        <div>
-          <Chat messages={this.state.messages}/>
-          <input type="submit" value="Create Message" onClick={() => this.createMessage()} />
-        </div>
-      );
-    }
+    return (
+      <div>
+        <Chat messages={this.state.messages}/>
+        <input type="submit" value="Create Message" onClick={() => this.createMessage()} />
+      </div>
+    );
   }
 }
 
