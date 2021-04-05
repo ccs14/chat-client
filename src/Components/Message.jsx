@@ -1,8 +1,8 @@
 import React from "react";
 
-const Message = (message) => {
+const Message = (props) => {
     return (
-        <p>{`user${message.user} - ${message.contents}`}</p>
+        <p>{`user${this.props.user} - ${this.props.contents}`}</p>
     );
 }
 

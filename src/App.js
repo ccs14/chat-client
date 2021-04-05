@@ -1,14 +1,13 @@
 import React, { Component } from "react";
 import socketIOClient from "socket.io-client";
 import Chat from "./Components/Chat";
-import makeText from "./Utils/Utils";
 import 'dotenv/config';
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
       response: false,
-      text: {},
+      messageText: '',
       event: {},
       messages: [],
       endpoint: "http://127.0.0.1:3001",
@@ -33,17 +32,15 @@ class App extends Component {
   createMessage = () => {
     console.log("in createMessage()");
     console.log("state: ", this.state);
-    // get random text
-    // const messageText = makeText(15);
     // create standard message object
     const message = {
       "user": this.userId,
-      "message": this.state.text
+      "message": this.state.messageText
     };
     // log and send new message
     console.log("new client message: ", message);
-    debugger;
     this.socket.emit("message", [message]);
+    debugger;
   };
 
   componentDidMount = () => {
@@ -63,10 +60,9 @@ class App extends Component {
 
     return (
       <div>
-        <Chat messages={this.state.messages}/>
-        <form>
-          <input type='text' onChange={ this.captureText} />
-          <input type="submit" value="Create Message" onClick={this.createMessage} />
+        <form onSubmit={this.createMessage}>
+          <input type='text' value={this.state.messageText} placeholder="Create Message" onChange={(event) => this.setState({ messageText: event.target.value })} />
+          <button>Send Message</button>
         </form>
       </div>
     );
