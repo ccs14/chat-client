@@ -46,10 +46,12 @@ class App extends Component {
   componentDidMount = () => {
     // receive a group-message event, store data
     this.socket.on("group-message", data => this.setState({ response: data }, () => {
-      debugger;
       let newMessage = `user${data[0].user} - ${data[0].message}`;
       console.log("from server: ", data[0]);
-      this.state.messages.push(data[0]);
+      const newMessages = this.state.messages;
+      newMessages.push({ user: data[0].user, message: data[0].message })
+      this.setState({messages: newMessages});
+      debugger;
     }));
 
     console.log("client state: ", this.state);
