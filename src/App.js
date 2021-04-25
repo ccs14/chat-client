@@ -1,16 +1,13 @@
 import React, { Component } from "react";
 import socketIOClient from "socket.io-client";
 import Chat from "./Components/Chat";
-import 'dotenv/config';
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
       response: false,
       messageText: '',
-      event: {},
       messages: [],
-      endpoint: "http://127.0.0.1:3001",
     };
   }
 
