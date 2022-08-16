@@ -1,6 +1,6 @@
-import React, { Component } from "react";
-import socketIOClient from "socket.io-client";
+import React, {useState, useContext, useCallback, useEffect, Component} from 'react';
 import Chat from "./Components/Chat";
+import {SocketContext, socket} from 'context/socket';
 import 'dotenv/config';
 class App extends Component {
   constructor(props) {
@@ -10,16 +10,12 @@ class App extends Component {
       messageText: '',
       event: {},
       messages: [],
-      endpoint: "http://127.0.0.1:3001",
     };
   }
 
-  // define endpoint
-  endpoint = "http://127.0.0.1:3001";
-  // socket object for client
-  socket = socketIOClient(this.endpoint);
   // create user id for each client
   userId = Math.floor(Math.random() * 1000).toString();
+  socket = useContext(SocketContext);
 
   // capture textbox input
   captureText = (event) => {
@@ -43,7 +39,7 @@ class App extends Component {
     debugger;
   };
 
-  componentDidMount = () => {
+  componentDidUpdate = () => {
     // receive a group-message event, store data
     this.socket.on("group-message", data => this.setState({ response: data }, () => {
       let newMessage = `user${data[0].user} - ${data[0].message}`;
@@ -51,10 +47,9 @@ class App extends Component {
       const newMessages = this.state.messages;
       newMessages.push({ user: data[0].user, message: data[0].message })
       this.setState({messages: newMessages});
+      console.log("client state: ", this.state);
       debugger;
     }));
-
-    console.log("client state: ", this.state);
   }
 
   render() {
