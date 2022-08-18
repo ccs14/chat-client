@@ -1,6 +1,6 @@
-import React, {useState, useContext, useCallback, useEffect, Component} from 'react';
+import React, { useState, useContext, useCallback, useEffect, Component } from 'react';
 import Chat from "./Components/Chat";
-import {SocketContext, socket} from 'context/socket';
+import { SocketContext, socketApp } from './Context/Socket';
 import 'dotenv/config';
 class App extends Component {
   constructor(props) {
@@ -15,7 +15,7 @@ class App extends Component {
 
   // create user id for each client
   userId = Math.floor(Math.random() * 1000).toString();
-  socket = useContext(SocketContext);
+  socket2 = useContext(SocketContext);
 
   // capture textbox input
   captureText = (event) => {
