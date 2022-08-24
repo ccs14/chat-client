@@ -1,11 +1,12 @@
 import React, { useState, useContext, useCallback, useEffect, Component } from 'react';
+import { SocketContext, socketApp } from './Context/Socket';
 
 const Display = (props) => {
     console.log("props", props);
 
   // create user id for each client
   let userId = Math.floor(Math.random() * 1000).toString();
-  let socket = useContext(props.SocketContext);
+  let socket = useContext(SocketContext);
 
   // capture textbox input
   let captureText = (event) => {

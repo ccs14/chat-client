@@ -18,9 +18,9 @@ class App extends Component {
     console.log("this.state: ", this.state);
 
     return (
-      <SocketContext.Provider value={socketApp}>
-      <Display />
-    </SocketContext.Provider>
+      <div>
+        <Display />
+      </div>
     );
   }
 }
